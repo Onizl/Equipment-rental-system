@@ -405,7 +405,7 @@ void calculate_statistics(const vector<shared_ptr<Request>> &completed_requests,
 	double avg_total_mean = avg_total_sum / NUM_PROJECTS;
 	total_sys_sum = total_buf_sum + total_proc_sum;
 	cout << '\n' << "Mean p rejected: " << p_mean << " " << "Mean utizilation: " << utizilation_mean << " " << "Mean total time: " << avg_total_mean;
-	cout << '\n' << "Completed req: " << completed_req << " " << "Rejecected req: " << rejected_req << " " << "Total buf time: " << total_sys_sum;
+	cout << '\n' << "Completed req: " << completed_req << " " << "Rejecected req: " << rejected_req << " " << "Total sys time: " << total_sys_sum;
 }
 
 bool is_simulation_complete(const Buffer &buffer, const vector<Equipment> &equipment_list) {
