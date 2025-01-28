@@ -304,7 +304,7 @@ public:
 double p_sum;
 double utilization_sum;
 double avg_total_sum; 
-double total_buf_sum;
+double total_sys_sum;
 int completed_req;
 int rejected_req;
 
@@ -370,7 +370,7 @@ void calculate_statistics(const vector<shared_ptr<Request>> &completed_requests,
 
 		p_sum += p_reject;
 		avg_total_sum += avg_total_time;
-		total_buf_sum += (double)stats.at("buffer_time");
+		total_sys_sum += (double)stats.at("buffer_time") + (double)stats.at("processing_time");
 		completed_req += total - rejected;
 		rejected_req += rejected;
 
@@ -401,7 +401,7 @@ void calculate_statistics(const vector<shared_ptr<Request>> &completed_requests,
 	double utizilation_mean = utilization_sum / NUM_EQUIPMENT;
 	double avg_total_mean = avg_total_sum / NUM_PROJECTS;
 	cout << '\n' << "Mean p rejected: " << p_mean << " " << "Mean utizilation: " << utizilation_mean << " " << "Mean total time: " << avg_total_mean;
-	cout << '\n' << "Completed req: " << completed_req << " " << "Rejecected req: " << rejected_req << " " << "Total buf time: " << total_buf_sum;
+	cout << '\n' << "Completed req: " << completed_req << " " << "Rejecected req: " << rejected_req << " " << "Total buf time: " << total_sys_sum;
 }
 
 bool is_simulation_complete(const Buffer &buffer, const vector<Equipment> &equipment_list) {
@@ -477,7 +477,7 @@ void run_simulation(bool step_by_step = false) {
 }
 
 int main() {
-	run_simulation(true);
+	run_simulation(false);
 
 	return 0;
 }
