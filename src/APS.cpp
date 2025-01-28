@@ -12,10 +12,10 @@
 using namespace std;
 
 const int NUM_PROJECTS = 10;
-const int NUM_EQUIPMENT = 12;
+const int NUM_EQUIPMENT = 8;
 const int BUFFER_SIZE = 10;
 const int TOTAL_REQUESTS = 2500;
-const double LYAMBDA = 2;
+const double LYAMBDA = 1;
 const int a = 6;
 const int b = 8;
 
@@ -303,7 +303,9 @@ public:
 
 double p_sum;
 double utilization_sum;
-double avg_total_sum; 
+double avg_total_sum;
+double total_buf_sum;
+double total_proc_sum;
 double total_sys_sum;
 int completed_req;
 int rejected_req;
@@ -370,7 +372,8 @@ void calculate_statistics(const vector<shared_ptr<Request>> &completed_requests,
 
 		p_sum += p_reject;
 		avg_total_sum += avg_total_time;
-		total_sys_sum += (double)stats.at("buffer_time") + (double)stats.at("processing_time");
+		total_buf_sum += (double)stats.at("buffer_time");
+		total_proc_sum += (double)stats.at("processing_time");
 		completed_req += total - rejected;
 		rejected_req += rejected;
 
@@ -400,6 +403,7 @@ void calculate_statistics(const vector<shared_ptr<Request>> &completed_requests,
 	double p_mean = p_sum / NUM_PROJECTS;
 	double utizilation_mean = utilization_sum / NUM_EQUIPMENT;
 	double avg_total_mean = avg_total_sum / NUM_PROJECTS;
+	total_sys_sum = total_buf_sum + total_proc_sum;
 	cout << '\n' << "Mean p rejected: " << p_mean << " " << "Mean utizilation: " << utizilation_mean << " " << "Mean total time: " << avg_total_mean;
 	cout << '\n' << "Completed req: " << completed_req << " " << "Rejecected req: " << rejected_req << " " << "Total buf time: " << total_sys_sum;
 }
